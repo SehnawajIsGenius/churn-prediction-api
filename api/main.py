@@ -4,12 +4,14 @@ import joblib
 import pandas as pd
 import os
 
-# Change to project root directory
 # Auto-detect project root
 import sys
 from pathlib import Path
 project_root = Path(__file__).parent.parent
 os.chdir(project_root)
+
+# Create FastAPI app FIRST
+app = FastAPI(title="Customer Churn Prediction API", version="1.0")
 
 # Train model if it doesn't exist
 if not os.path.exists('models/model.pkl'):
@@ -107,4 +109,4 @@ def predict_churn(customer: CustomerData):
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy", "model_loaded": True} 
+    return {"status": "healthy", "model_loaded": True}
