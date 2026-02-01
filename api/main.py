@@ -11,7 +11,11 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 os.chdir(project_root)
 
-app = FastAPI(title="Customer Churn Prediction API", version="1.0")
+# Train model if it doesn't exist
+if not os.path.exists('models/model.pkl'):
+    print("⚠️ Model not found! Training now...")
+    from train_on_startup import train_model
+    train_model()
 
 # Load model and encoders
 model = joblib.load('models/model.pkl')
